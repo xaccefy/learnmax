@@ -1,0 +1,26 @@
+{
+  "name": "learnmax",
+  "version": "1.0.0",
+  "author": "pi-user",
+  "description": "Combined Socratic diagnosis + curriculum building + spaced review teaching system for coding agents. Fuses teach-me (diagnosis) and Matt Pocock's /teach (lesson production) and adds a retention-verification review loop.",
+  "license": "MIT",
+  "keywords": [
+    "pi-package",
+    "pi-skills",
+    "education",
+    "learning",
+    "Socratic",
+    "literature-review",
+    "spaced-repetition",
+    "curriculum"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/learnmax.git"
+  }
+}

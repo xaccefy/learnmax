@@ -1,0 +1,13 @@
+# Ignore the learning workspace artifacts (user-generated, per session)
+diary/
+literature/
+gaps/
+lessons/
+reference/
+learning-records/
+review/
+MISSION.md
+RESOURCES.md
+GLOSSARY.md
+NOTES.md
+assets/
