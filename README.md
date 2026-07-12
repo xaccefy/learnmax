@@ -22,9 +22,9 @@ Neither source alone closes the loop. `teach-me` diagnoses but leaves no durable
 ## Install
 
 ```bash
-pi install git:<your-fork>/learnmax
+pi install git:x4cc3/learnmax
 # or, for the Agent-Skills path:
-npx skills add <your-org>/learnmax
+npx skills add x4cc3/learnmax
 ```
 
 Then, from any directory you want to use as a learning workspace:
