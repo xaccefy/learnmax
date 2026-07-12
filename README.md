@@ -22,9 +22,11 @@ Neither source alone closes the loop. `teach-me` diagnoses but leaves no durable
 ## Install
 
 ```bash
-pi install git:x4cc3/learnmax
+pi install npm:@xaccefy/learnmax
 # or, for the Agent-Skills path:
-npx skills add x4cc3/learnmax
+npx skills add @xaccefy/learnmax
+# git install works without publishing:
+pi install git:x4cc3/learnmax
 ```
 
 Then, from any directory you want to use as a learning workspace:

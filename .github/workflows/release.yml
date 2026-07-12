@@ -1,0 +1,49 @@
+name: Release
+
+# Publishes learnmax to npm so it becomes installable as a pi package:
+#   pi install npm:@xaccefy/learnmax
+# (git install already works without CI: pi install git:x4cc3/learnmax)
+#
+# Trigger: publish a GitHub Release. Tag the release vX.Y.Z; the version is
+# synced into package.json automatically.
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Validate skills
+        run: |
+          for d in skills/*/; do
+            [ -f "$d/SKILL.md" ] || { echo "Missing SKILL.md in $d"; exit 1; }
+          done
+          echo "All skills valid"
+
+      - name: Sync version from tag
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          npm version "$VERSION" --no-git-tag-version --allow-same-version
+          echo "Publishing @xaccefy/learnmax@$VERSION"
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Verify installable
+        run: npm view @xaccefy/learnmax version
