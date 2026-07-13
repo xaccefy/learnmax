@@ -1,75 +1,68 @@
 ---
 name: learn
-description: Build a stateful teaching workspace that produces lessons, a glossary, and learning records for a topic — sequenced to the user's Zone of Proximal Development for long-term retention. Consumes a Gap Report from /quiz and tensions from /research so lessons target real gaps.
-argument-hint: "[topic] <@gaps-file> <@literature-review-file>"
+description: Research validated sources and build well-sequenced lessons from them. Pairs with /quiz (self-check) and /test (spaced review). No Socratic grilling, no testing — those are separate commands.
+argument-hint: "<topic|question>"
 ---
 
-# teach
+# learn — research + build
 
-Turn the current directory into a standing teaching workspace and teach one topic across many sessions — devising short, beautiful, interactive lessons tied to *why* the user is learning. This is the **building** stage of learnmax.
+You research validated sources and build lessons from them. You do NOT grill the user and you do NOT test them — those are `/quiz` and `/test`.
 
-Unlike a flat explainer, you build **durable artifacts** the user returns to, and you sequence them to the **ZPD** so each lesson challenges *just enough*.
+## Run in one call
 
-Read `CONTEXT.md` for the domain language (Mission, Lesson, Glossary, Learning Record, ZPD, Storage strength). This skill is inspired by Matt Pocock's `/learn`.
+`/learn "topic"` does both phases in a single invocation:
 
-## Inputs (the fusion)
+1. **Phase 1 — Research.** Synthesize validated sources into a teaching review (`literature/...`).
+2. **Phase 2 — Build lessons.** Build the lessons from the research — its tensions, misunderstandings, and consensus — in a sensible build order.
 
-If the user passed references, load them *first* — they make lessons target real gaps instead of guessing:
+Then point the user to `/quiz` (quick self-check) and `/test` (spaced review).
 
-- **`@gaps/...`** (from `/quiz`) — per-topic Levels, surfaced misconceptions, open tensions, and a **ZPD-priority order**. Build lessons in that order; a `Confused` topic comes before an `Aware` one.
-- **`@literature/...`** (from `/research`) — cite these sources in lessons; build lessons *around the tensions* the review mapped, not just settled facts.
+## Phase 1 — Research (synthesize & teach)
 
-If no inputs, interview for the Mission first (below), then proceed.
+Turn the topic into a teaching review from validated, high-trust sources. The output is a *teaching document, not a bibliography* — explain in your own words, connect findings, name the traps. Sources are footnotes; the prose is the product.
 
-## Workspace files
+**Validate sources:** keep recent, cited, clear, diverse; prefer primary sources and recognised experts. Drop weak or off-topic ones and say why.
 
-| File | Role |
-|------|------|
-| `MISSION.md` | Why the user is learning this — grounds every lesson |
-| `RESOURCES.md` | Vetted, high-trust sources |
-| `lessons/NNNN-<slug>.html` | Numbered, self-contained lessons (primary unit) |
-| `reference/*.html` | Compressed cheat-sheets / glossaries |
-| `learning-records/NNNN-<slug>.md` | ADR-style: demonstrated understanding |
-| `assets/*` | Reusable components (shared stylesheet first) |
-| `NOTES.md` | Teaching preferences |
-| `GLOSSARY.md` | Canonical terminology |
+**Teaching craft (apply throughout):**
+- Pre-teach the 3-5 core terms before you use them.
+- After each finding, give a plain-language (Feynman) restatement.
+- Show a worked example (step-by-step in one case), not just an assertion.
+- Pin every claim to one concrete instance.
+- Elaborate analogies: why they fit *and* where they break.
+- Sequence findings so each builds on the last.
+- End with things the learner must *do*.
 
-Use the format specs co-located in this skill folder: MISSION-FORMAT.md, RESOURCES-FORMAT.md, LEARNING-RECORD-FORMAT.md, GLOSSARY-FORMAT.md.
-
-## Process
-
-1. **Pin the Mission.** If `MISSION.md` is empty/vague, interview until it isn't. Concrete over abstract ("Ship a Rust CLI" beats "learn Rust"). Revise as the user grows.
-2. **Populate RESOURCES** from the literature review (and any user sources) before teaching. High-trust only; annotate every entry; surface `## Gaps`.
-3. **Compute the ZPD.** Read `learning-records/` + Mission + the Gap Report's priority order. Pick the next lesson that challenges *just enough*.
-   - If a Gap Report exists, its **ZPD-priority order** is the lesson sequence. A `Confused` branch → a clarification lesson first; an `Aware` branch with an open tension → a "hold the tension" lesson citing both sides.
-4. **Produce one lesson.** A beautiful, self-contained HTML file (`NNNN-<slug>.html`), short enough for working memory, one tangible win, tied to the Mission, with anchor links and a **primary-source citation** (from RESOURCES / literature review). Try to open it for the user.
-5. **Build from assets.** Lessons draw on `./assets/`; new reusable pieces go there, never inlined.
-6. **Update Glossary + Learning Records** as understanding is demonstrated. A term only enters `GLOSSARY.md` once the user can use it correctly.
-
-## Learning science (non-negotiable)
-
-- **Storage strength > fluency.** Fluency (in-the-moment recall) feels like mastery but isn't. Build **long-term retention** via desirable difficulty.
-- **Knowledge first, skills second — difficulty flips role.** For *acquiring* knowledge, difficulty is the enemy (eats working memory). For *drilling* skills, difficulty is the tool.
-- **Tight feedback loops for skills.** Quizzes where every answer is the *same length* (no formatting clues); immediate/automatic feedback.
-- **Spacing & interleaving** in review, not here — but *design* lessons so they're easy to quiz later (clear terms, checkable claims).
-
-## When a Gap Report drives the lesson
-
-For each gap-report entry, the lesson should:
-- Name the misconception explicitly and *why* it's tempting (from diary remarks `[⚠ misunderstanding]`).
-- Present the tension with both sides cited (from literature review).
-- End with a retrieval-practice question, so `/test` has something to test.
-
-## Close-out → hand to review
-
-After producing lessons, tell the user:
-
-```
-/test [topic]
+Write to `literature/<subject>/<topic>-review.md`:
+```markdown
+# Research: [topic]
+## TL;DR — the mental model + the top trap, readable standalone.
+## How to think about it (mental model) — pre-teach core terms; one coherent picture.
+## Findings (explained) — mechanism, why true, why people err, concrete instance, worked example, [source](url) [✓ consensus | ⚠ tension | ✓ pitfall]; *plain-words restatement*.
+## How the findings connect — synthesis no single source gives.
+## Tensions — View A vs B, best evidence each side, what decides.
+## Common misunderstandings — tempting why, what's true, failure mode.
+## How to apply (takeaways) — 3-5 concrete changes.
+## Sources — kept (what it backs, why kept) / dropped (why).
+## Gaps — thin areas + why the literature is quiet there.
 ```
 
-`/test` verifies the lessons worked and feeds weak items back as new gaps.
+## Phase 2 — Build lessons
 
-## Loop
+Build the lessons directly from the research — its tensions, misunderstandings, and consensus — not from diagnosing the user.
 
-`/quiz` → (Gap Report) → **`/learn`** → (lessons + glossary) → `/test` → (weak items) → new Gap Report → back here.
+1. **Mission.** If `MISSION.md` is empty/vague, interview for the concrete reason (not "learn X" — "ship a Rust CLI"). Revise as the user grows.
+2. **Resources.** Populate `RESOURCES.md` from the review. High-trust only; annotate; surface gaps.
+3. **Order.** Build lessons in a sensible progression: foundational concepts first, then the contested points (tensions) and the common misunderstandings the review surfaced. One lesson per load-bearing idea.
+4. **One lesson.** `lessons/NNNN-<slug>.md` — a Markdown note, self-contained, one tangible win, tied to Mission, primary-source citation. Obsidian renders it natively. Apply the same teaching craft as Phase 1: worked example, concrete instance, plain-language restatement, and end with a **retrieval-practice question** (feeds `/quiz` and `/test`).
+5. **Glossary + Records.** Update `GLOSSARY.md` and `learning-records/NNNN-<slug>.md` as understanding is demonstrated. A term enters the glossary only once it's clearly defined in the lessons.
+
+Format specs live beside this skill: MISSION-FORMAT.md, RESOURCES-FORMAT.md, GLOSSARY-FORMAT.md, LEARNING-RECORD-FORMAT.md.
+
+## Next step
+
+After building, tell the user:
+
+```
+/quiz "topic"     # self-check what you learned
+/test "topic"     # spaced review, scores, feeds weak spots back
+```

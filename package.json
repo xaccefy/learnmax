@@ -1,6 +1,6 @@
 {
   "name": "@xaccefy/learnmax",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "pi-user",
   "description": "Combined Socratic diagnosis + curriculum building + spaced review teaching system for coding agents. Fuses teach-me (diagnosis) and Matt Pocock's /teach (lesson production) and adds a retention-verification review loop.",
   "license": "MIT",
@@ -22,7 +22,6 @@
   "files": [
     "package.json",
     "README.md",
-    "CONTEXT.md",
     "skills"
   ],
   "repository": {

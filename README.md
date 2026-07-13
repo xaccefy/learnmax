@@ -1,23 +1,23 @@
 # learnmax
 
-A combined teaching system for coding agents that runs the **full learning loop**: research → diagnose → build → review.
+A teaching system for coding agents that runs the **full learning loop**: learn → quiz → test.
 
-It fuses two lineages and adds the missing stage:
+It builds on one lineage:
 
-- **Diagnosis** (from `teach-me` / DuskyElf): Socratic grilling that finds your unknown unknowns, bias, and fuzzy thinking; a source-grounded literature review that maps where experts *actually disagree*.
-- **Building** (from Matt Pocock's `/learn`): a stateful workspace that produces beautiful HTML lessons, a glossary, and learning records, sequenced to your Zone of Proximal Development for long-term retention.
-- **Review** (new): spaced-retrieval practice over your glossary and lessons that *verifies* retention and feeds weak spots back into the loop.
+- **Building** (from Matt Pocock's `/learn`): a stateful workspace that produces Markdown lessons, a glossary, and learning records, sequenced from validated sources for long-term retention.
+- **Review**: spaced-retrieval practice over your glossary and lessons that *verifies* retention and feeds weak spots back into the loop.
 
-Neither source alone closes the loop. `teach-me` diagnoses but leaves no durable artifact; `/learn` builds but never interrogates your misconceptions or checks whether you retained anything. `learnmax` connects them: **diagnosis emits a Gap Report that building consumes; review proves the building worked.**
+`/learn` researches validated sources and turns them into well-sequenced lessons. You check what stuck yourself with `/quiz` and `/test`.
 
-## The four skills
+## The skills
 
 ```
-/research [topic|question]      → source-backed review: consensus, tensions, gaps
-/quiz [topic] [@review-file]          → Socratic session; ends with a Gap Report
-/learn [topic] [@gaps @review]            → lessons + glossary + learning records, targeting your gaps
-/test [topic]                           → spaced retrieval over glossary + lessons; feeds weak items back
+/learn [topic|question]    → research validated sources, build lessons
+/quiz  [topic]             → self-check what you learned
+/test  [topic]             → spaced review, scores, feeds weak spots back
 ```
+
+`/learn` researches and builds in one call. `/quiz` and `/test` are run separately, whenever you want to check yourself.
 
 ## Install
 
@@ -32,31 +32,35 @@ pi install git:x4cc3/learnmax
 Then, from any directory you want to use as a learning workspace:
 
 ```bash
-/research "transformers"
-/quiz "transformers" @literature/transformers/transformers-review.md
-/learn "transformers" @gaps/transformers/transformers-gaps.md
-/test "transformers"
+/learn "memory layout"    # research + build the lessons
+/quiz  "memory layout"    # self-check
+/test  "memory layout"    # spaced review
 ```
 
-## How they chain
+`/learn` does research and building in one call. Run `/quiz` and `/test` after, as often as you like.
 
-Each skill has exactly one job, so the loop is inspectable and resumable. A `/quiz` session that reveals you're `Confused` on a branch flows straight into a `/learn` lesson for that branch, citing the tension `/research` mapped. A `/test` that shows a glossary term scoring low becomes a new gap → re-lesson or re-grill.
+## How it runs
+
+Three commands, one flow:
+
+1. **Learn** (`/learn`) — researches validated sources, builds lessons (`lessons/...`).
+2. **Quiz** (`/quiz`) — self-check over the lessons + glossary; immediate feedback.
+3. **Test** (`/test`) — spaced self-retrieval; scores `known | shaky | unknown`, writes `review/`, feeds weak items back as topics for more lessons.
+
+No Socratic grilling of the user — lessons come from the researched sources, and you test yourself with `/quiz` and `/test`.
 
 ## Artifacts (all git-ignored by default)
 
 | Path | Owner | Purpose |
 |------|-------|---------|
-| `literature/<subject>/<topic>-review.md` | `/research` | Source map: consensus, tensions, gaps |
-| `diary/<subject>/<file>.md` | `/quiz` | Session map: topics, levels, remarks |
-| `gaps/<subject>/<topic>-gaps.md` | `/quiz` | Bridge: levels + misconceptions + ZPD order |
-| `MISSION.md` | `/learn` | Why you're learning this |
+| `literature/<subject>/<topic>-review.md` | `/learn` (Phase 1) | Source map: consensus, tensions, gaps |
+| `MISSION.md` | `/learn` (Phase 2) | Why you're learning this |
 | `RESOURCES.md` | `/learn` | Vetted sources |
-| `lessons/NNNN-<slug>.html` | `/learn` | The lessons |
+| `lessons/NNNN-<slug>.md` | `/learn` | The lessons (Markdown, renders in Obsidian) |
 | `GLOSSARY.md` | `/learn` | Canonical terms |
 | `learning-records/NNNN-<slug>.md` | `/learn` | Demonstrated understanding (ADR-style) |
-| `reference/*.html` | `/learn` | Compressed cheat-sheets |
 | `review/<subject>/<date>.md` | `/test` | Recall scores + weak items |
 
 ## License
 
-MIT. Builds on ideas from `teach-me` (MIT) and Matt Pocock's `skills` (MIT).
+MIT. Builds on `teach-me`'s tension-aware literature review and Matt Pocock's `/learn` (lesson production); adds a spaced-retrieval review.
