@@ -1,6 +1,6 @@
 # learnmax
 
-A teaching system for coding agents that runs the **full learning loop**: learn → quiz → test.
+A teaching system run by coding agents to teach human users. It runs a full learning loop: learn, quiz, and test.
 
 It builds on one lineage:
 
