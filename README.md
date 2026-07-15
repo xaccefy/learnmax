@@ -53,13 +53,13 @@ No Socratic grilling of the user — lessons come from the researched sources, a
 
 | Path | Owner | Purpose |
 |------|-------|---------|
-| `literature/<subject>/<topic>-review.md` | `/learn` (Phase 1) | Source map: consensus, tensions, gaps |
+| `literature/<topic>-review.md` | `/learn` (Phase 1) | Source map: consensus, tensions, gaps |
 | `MISSION.md` | `/learn` (Phase 2) | Why you're learning this |
 | `RESOURCES.md` | `/learn` | Vetted sources |
 | `lessons/NNNN-<slug>.md` | `/learn` | The lessons (Markdown, renders in Obsidian) |
 | `GLOSSARY.md` | `/learn` | Canonical terms |
 | `learning-records/NNNN-<slug>.md` | `/learn` | Demonstrated understanding (ADR-style) |
-| `review/<subject>/<date>.md` | `/test` | Recall scores + weak items |
+| `review/<date>.md` | `/test` | Recall scores + weak items |
 
 ## License
 

@@ -7,6 +7,10 @@ They are the teaching equivalent of ADRs: they capture non-obvious lessons, key 
 ## Template
 
 ```md
+---
+status: active
+---
+
 # {Short title of what was learned or established}
 
 {1-3 sentences: what was learned (or what prior knowledge was established), and why it matters for future sessions.}
@@ -43,4 +47,4 @@ Write one when any of these is true:
 
 ## Supersession
 
-When a later record contradicts an earlier one, mark the old record `Status: superseded by LR-NNNN` rather than deleting it. The history of how understanding evolved is itself useful signal.
+When a later record contradicts an earlier one, change the frontmatter status to `superseded by LR-NNNN` in the old record rather than deleting it. The history of how understanding evolved is itself useful signal.

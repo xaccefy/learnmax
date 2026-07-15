@@ -11,17 +11,18 @@
 
 ## Terms
 
-**Term**:
+**Term** (defined in [[lessons/NNNN-slug.md]]):
 Definition in one or two sentences — what the term IS.
 _Avoid_: alias1, alias2
 
-**Another Term**:
+**Another Term** (defined in [[lessons/NNNN-slug.md]]):
 Definition.
 _Avoid_: alias
 ```
 
 ## Rules
 
+- **Link back to definitions.** Each term must link to the specific lesson (`[[lessons/NNNN-slug.md]]`) that defined it.
 - **Add a term only when the user understands it.** The glossary is a record of compressed knowledge, not a dictionary the user reads to learn. If the user has just been introduced to a concept, wait until they can use it correctly before promoting it here.
 - **Be opinionated.** When several words exist for the same concept, pick the best one and list the rest as aliases to avoid. This is how language compresses.
 - **Keep definitions tight.** One or two sentences. Define what the term IS, not what it does or how to do it.

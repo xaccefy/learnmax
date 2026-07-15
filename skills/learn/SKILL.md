@@ -32,7 +32,7 @@ Turn the topic into a teaching review from validated, high-trust sources. The ou
 - Sequence findings so each builds on the last.
 - End with things the learner must *do*.
 
-Write to `literature/<subject>/<topic>-review.md`:
+Write to `literature/<topic>-review.md`:
 ```markdown
 # Research: [topic]
 ## TL;DR — the mental model + the top trap, readable standalone.
@@ -53,7 +53,7 @@ Build the lessons directly from the research — its tensions, misunderstandings
 1. **Mission.** If `MISSION.md` is empty/vague, interview for the concrete reason (not "learn X" — "ship a Rust CLI"). Revise as the user grows.
 2. **Resources.** Populate `RESOURCES.md` from the review. High-trust only; annotate; surface gaps.
 3. **Order.** Build lessons in a sensible progression: foundational concepts first, then the contested points (tensions) and the common misunderstandings the review surfaced. One lesson per load-bearing idea.
-4. **One lesson.** `lessons/NNNN-<slug>.md` — a Markdown note, self-contained, one tangible win, tied to Mission, primary-source citation. Obsidian renders it natively. Apply the same teaching craft as Phase 1: worked example, concrete instance, plain-language restatement, and end with a **retrieval-practice question** (feeds `/quiz` and `/test`).
+4. **One lesson.** `lessons/NNNN-<slug>.md` — a Markdown note, self-contained, one tangible win, tied to Mission, primary-source citation. Obsidian renders it natively. Apply the same teaching craft as Phase 1: worked example, concrete instance, plain-language restatement. End with a **retrieval-practice question** (feeds `/quiz` and `/test`). The lesson text must contain all information required to answer this question.
 5. **Glossary + Records.** Update `GLOSSARY.md` and `learning-records/NNNN-<slug>.md` as understanding is demonstrated. A term enters the glossary only once it's clearly defined in the lessons.
 
 Format specs live beside this skill: MISSION-FORMAT.md, RESOURCES-FORMAT.md, GLOSSARY-FORMAT.md, LEARNING-RECORD-FORMAT.md.
