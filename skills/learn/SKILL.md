@@ -50,13 +50,16 @@ Write to `literature/<topic>-review.md`:
 
 Build the lessons directly from the research — its tensions, misunderstandings, and consensus — not from diagnosing the user.
 
-1. **Mission.** If `MISSION.md` is empty/vague, interview for the concrete reason (not "learn X" — "ship a Rust CLI"). Revise as the user grows.
-2. **Resources.** Populate `RESOURCES.md` from the review. High-trust only; annotate; surface gaps.
-3. **Order.** Build lessons in a sensible progression: foundational concepts first, then the contested points (tensions) and the common misunderstandings the review surfaced. One lesson per load-bearing idea.
-4. **One lesson.** `lessons/NNNN-<slug>.md` — a Markdown note, self-contained, one tangible win, tied to Mission, primary-source citation. Obsidian renders it natively. Apply the same teaching craft as Phase 1: worked example, concrete instance, plain-language restatement. End with a **retrieval-practice question** (feeds `/quiz` and `/test`). The lesson text must contain all information required to answer this question.
-5. **Glossary + Records.** Update `GLOSSARY.md` and `learning-records/NNNN-<slug>.md` as understanding is demonstrated. A term enters the glossary only once it's clearly defined in the lessons.
+1. **Ingest the backlog.** If `review/weak-items.md` exists, read it first. Those weak items are the highest-priority topics for new lessons — they are exactly where the last `/test` showed retention failed. Cover them before expanding into new ground.
+2. **Mission.** If `MISSION.md` is empty/vague, interview for the concrete reason (not "learn X" — "ship a Rust CLI"). Revise as the user grows.
+3. **Resources.** Populate `RESOURCES.md` from the review. High-trust only; annotate; surface gaps.
+4. **Order.** Build lessons in a sensible progression: foundational concepts first, then the contested points (tensions) and the common misunderstandings the review surfaced. One lesson per load-bearing idea.
+5. **One lesson.** `lessons/NNNN-<slug>.md` — a Markdown note, self-contained, one tangible win, tied to Mission, primary-source citation. Obsidian renders it natively. Follow the structure in **LESSON-FORMAT.md** (mental model, how-it-works, at least one worked example, pitfalls, why-it-matters, connections, summary, retrieval practice). Lessons must be *deep*, not stubs: a reader should be able to teach the idea back from this file alone. Apply the same teaching craft as Phase 1. End with a **retrieval-practice question** (feeds `/quiz` and `/test`). The lesson text must contain all information required to answer this question.
+6. **Glossary + Records.** Update `GLOSSARY.md` and `learning-records/NNNN-<slug>.md` as understanding is demonstrated. A term enters the glossary only once it's clearly defined in the lessons.
+7. **Record the topic.** Append the topic (and its lesson range) to `TOPICS.md` at the workspace root so `/quiz` and `/test` can disambiguate which lessons a topic covers. Format: `- {topic}: lessons/NNNN-…–NNNN-…`.
+8. **Validate.** Run `learnmax-validate` (or `node <this-package>/scripts/validate-artifacts.mjs`) from the workspace root. Fix any reported errors before finishing — this is the automated guard against format drift.
 
-Format specs live beside this skill: MISSION-FORMAT.md, RESOURCES-FORMAT.md, GLOSSARY-FORMAT.md, LEARNING-RECORD-FORMAT.md.
+Format specs live beside this skill: MISSION-FORMAT.md, RESOURCES-FORMAT.md, GLOSSARY-FORMAT.md, LEARNING-RECORD-FORMAT.md, LESSON-FORMAT.md.
 
 ## Next step
 

@@ -61,6 +61,12 @@ Lessons come from the researched sources. You test yourself with `/quiz` and `/t
 | `learning-records/NNNN-<slug>.md` | `/learn` | Demonstrated understanding (ADR-style) |
 | `review/<date>.md` | `/test` | Recall scores + weak items |
 
+## Loops & tooling
+
+- **Weak-item loop is automatic.** `/test` writes every `shaky`/`unknown` item to `review/weak-items.md`. `/learn` ingests that file **first** on its next run, so weak spots drive the next lessons without a manual hand-off.
+- **Topic registry.** `/learn` records each topic (and its lesson range) in `TOPICS.md` at the workspace root, so `/quiz` and `/test` can disambiguate which lessons a topic covers when several exist.
+- **Artifact validation.** After building, `/learn` runs `learnmax-validate` (shipped as a bin, or `node <pkg>/scripts/validate-artifacts.mjs` from the workspace root). It checks `MISSION.md`, `GLOSSARY.md`, `lessons/`, and `review/` against the format specs and fails on structural drift.
+
 ## License
 
 MIT. Builds on `teach-me`'s tension-aware literature review and Matt Pocock's `/learn` (lesson production); adds a spaced-retrieval review.
