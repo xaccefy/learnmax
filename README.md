@@ -43,11 +43,11 @@ Then, from any directory you want to use as a learning workspace:
 
 Three commands, one flow:
 
-1. **Learn** (`/learn`) — researches validated sources, builds lessons (`lessons/...`).
-2. **Quiz** (`/quiz`) — self-check over the lessons + glossary; immediate feedback.
-3. **Test** (`/test`) — spaced self-retrieval; scores `known | shaky | unknown`, writes `review/`, feeds weak items back as topics for more lessons.
+1. **Learn** (`/learn`): Researches validated sources and builds lessons under `lessons/`.
+2. **Quiz** (`/quiz`): Runs a self-check over the lessons and glossary. Gives immediate feedback.
+3. **Test** (`/test`): Runs a spaced self-retrieval review. Scores items as `known`, `shaky`, or `unknown`, writes results to `review/`, and schedules weak items for new lessons.
 
-No Socratic grilling of the user — lessons come from the researched sources, and you test yourself with `/quiz` and `/test`.
+Lessons come from the researched sources. You test yourself with `/quiz` and `/test` without Socratic grilling.
 
 ## Artifacts (all git-ignored by default)
 
