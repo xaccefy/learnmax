@@ -1,13 +1,14 @@
 # Lesson Format
 
-`lessons/NNNN-<slug>.md` holds one self-contained lesson. Each lesson teaches **one load-bearing idea** to a tangible win, tied to the Mission, with a primary-source citation. Obsidian renders it natively (wikilinks work).
+`<topic-slug>/lessons/NNNN-<slug>.md` holds one self-contained lesson. Each lesson teaches **one load-bearing idea** to a tangible win, tied to the topic's Mission, with a primary-source citation. Obsidian renders it natively (wikilinks work).
 
 A lesson is too short if a reader could not teach the idea back from this file alone. Aim for depth: a mental model, what happens under the hood, at least one worked example, the traps people actually hit, why the idea matters, how it connects to other lessons, and a tight summary. End with a retrieval-practice question whose answer is fully contained in the lesson.
 
 ## Title / filename
 
-- File: `lessons/0007-binary-search.md` (zero-padded `NNNN`, kebab `slug`).
-- Title: `# 0007 - Binary search` (the number matches the filename; the human title follows the dash).
+- File: `<topic-slug>/lessons/0001-binary-search.md` (zero-padded `NNNN`, kebab `slug`).
+- `NNNN` numbering is **local to the topic** — every topic starts at `0001`.
+- Title: `# 0001 - Binary search` (the number matches the filename; the human title follows the dash).
 
 ## Template
 
@@ -39,8 +40,8 @@ A lesson is too short if a reader could not teach the idea back from this file a
 {What breaks or what becomes possible because of this. Tie to real bugs, costs, or leverage.}
 
 ## Connections
-- Builds on [[lessons/NNNN-slug.md]].
-- Sets up [[lessons/NNNN-slug.md]].
+- Builds on [[<topic-slug>/lessons/NNNN-slug.md]].
+- Sets up [[<topic-slug>/lessons/NNNN-slug.md]].
 
 ## Summary
 {3-5 sentences restating the idea, the mechanism, and the main trap. The TL;DR a reader memorizes.}
@@ -60,8 +61,9 @@ A: {The full answer. Everything needed to answer must be in this lesson above.}
 - **Contain the answer.** The retrieval-practice answer must be derivable from this file alone. `/quiz` and `/test` only ask what is stated here.
 - **Show, don't assert.** Every non-trivial claim gets a worked example or a concrete instance.
 - **Name the traps.** The Pitfalls section is mandatory — it is what the learner will actually fail on.
-- **Link forward and back.** Connections use `[[lessons/NNNN-slug.md]]` so the curriculum reads as a graph, not a list.
+- **Link forward and back.** Connections use `[[<topic-slug>/lessons/NNNN-slug.md]]` so the curriculum reads as a graph, not a list. Links may cross topic dirs freely — use the full path.
 - **Cite.** At least one primary or expert source in References.
+- **Plain Q/A.** The retrieval practice uses `Q:` / `A:` lines with no bold or other decoration — `/quiz` and `/test` parse this exact form.
 
 ## Exemplar (verbose, do not trim)
 
@@ -184,8 +186,8 @@ auto-zero, no auto-null) is what lets you spot them by reading code, not just
 by waiting for a crash.
 
 ## Connections
-- Builds on [[lessons/0001-stack-frames.md]] (stack lifetime is automatic; heap is not).
-- Sets up [[lessons/0004-allocators.md]] (how `malloc`/`free` find and reuse blocks).
+- Builds on [[memory/lessons/0001-stack-frames.md]] (stack lifetime is automatic; heap is not).
+- Sets up [[memory/lessons/0004-allocators.md]] (how `malloc`/`free` find and reuse blocks).
 
 ## Summary
 The heap is manually managed memory. `malloc` lends you a block; `free` returns

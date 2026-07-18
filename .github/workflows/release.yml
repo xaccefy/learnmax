@@ -4,10 +4,14 @@ name: Release
 #   pi install npm:@xaccefy/learnmax
 # (git install already works without CI: pi install git:x4cc3/learnmax)
 #
-# Trigger: publish a GitHub Release. Tag the release vX.Y.Z; the version is
-# synced into package.json automatically.
+# Triggers: every push/PR to main runs validation; publishing a GitHub Release
+# (tag vX.Y.Z) additionally syncs the version into package.json and publishes.
 
 on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
   release:
     types: [published]
 
@@ -15,7 +19,7 @@ permissions:
   contents: read
 
 jobs:
-  publish:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,7 +29,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          registry-url: https://registry.npmjs.org
 
       - name: Validate skills
         run: |
@@ -37,10 +40,25 @@ jobs:
       - name: Smoke-test artifact validator
         run: bash scripts/smoke-test.sh
 
+  publish:
+    if: github.event_name == 'release'
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
       - name: Sync version from tag
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           npm version "$VERSION" --no-git-tag-version --allow-same-version
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
           echo "Publishing @xaccefy/learnmax@$VERSION"
 
       - name: Publish to npm
@@ -49,4 +67,12 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Verify installable
-        run: npm view @xaccefy/learnmax version
+        run: |
+          for i in 1 2 3 4 5; do
+            PUBLISHED="$(npm view @xaccefy/learnmax version || true)"
+            [ "$PUBLISHED" = "$VERSION" ] && { echo "Verified $VERSION on npm"; exit 0; }
+            echo "npm shows ${PUBLISHED:-nothing}, waiting for propagation..."
+            sleep 10
+          done
+          echo "npm did not show $VERSION after retries"
+          exit 1

@@ -1,6 +1,6 @@
 # GLOSSARY.md Format
 
-`GLOSSARY.md` is the canonical language for this teaching workspace. All lessons, exercises, and learning records should adhere to its terminology. Building it is itself part of learning: compressing a concept into a tight definition is evidence the user understands it.
+`<topic-slug>/GLOSSARY.md` is the canonical language for one topic. One glossary per topic, inside the topic dir — no root glossary, no cross-topic glossary. All lessons and learning records should adhere to its terminology. Building it is itself part of learning: compressing a concept into a tight definition is evidence the material is understood well enough to teach.
 
 ## Structure
 
@@ -11,19 +11,19 @@
 
 ## Terms
 
-**Term** (defined in [[lessons/NNNN-slug.md]]):
+**Term** (defined in [[<topic-slug>/lessons/NNNN-slug.md]]):
 Definition in one or two sentences — what the term IS.
 _Avoid_: alias1, alias2
 
-**Another Term** (defined in [[lessons/NNNN-slug.md]]):
+**Another Term** (defined in [[<topic-slug>/lessons/NNNN-slug.md]]):
 Definition.
 _Avoid_: alias
 ```
 
 ## Rules
 
-- **Link back to definitions.** Each term must link to the specific lesson (`[[lessons/NNNN-slug.md]]`) that defined it.
-- **Add a term only when the user understands it.** The glossary is a record of compressed knowledge, not a dictionary the user reads to learn. If the user has just been introduced to a concept, wait until they can use it correctly before promoting it here.
+- **Link back to definitions.** Each term must link to the specific lesson (`[[<topic-slug>/lessons/NNNN-slug.md]]`) that defined it. No term without a backlink.
+- **Add a term when its lesson defines it.** The glossary records the canonical language of the topic; whether the user has *retained* the term is tracked by learning records and `review/`, not by withholding the entry.
 - **Be opinionated.** When several words exist for the same concept, pick the best one and list the rest as aliases to avoid. This is how language compresses.
 - **Keep definitions tight.** One or two sentences. Define what the term IS, not what it does or how to do it.
 - **Use the glossary's own terms inside definitions.** Once a term is in the glossary, prefer it everywhere — including inside other definitions.

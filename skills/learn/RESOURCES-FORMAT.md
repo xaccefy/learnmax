@@ -1,6 +1,6 @@
 # RESOURCES.md Format
 
-`RESOURCES.md` is the curated set of trusted sources for this topic. Knowledge for lessons should be drawn from here, not from parametric guesses. Wisdom comes from the communities listed here.
+`<topic-slug>/RESOURCES.md` is the curated set of trusted sources for one topic, inside the topic dir. Knowledge for lessons should be drawn from here, not from parametric guesses. Wisdom comes from the communities listed here.
 
 ## Structure
 

@@ -8,11 +8,29 @@ argument-hint: "<topic|question>"
 
 You research validated sources and build lessons from them. You do NOT grill the user and you do NOT test them — those are `/quiz` and `/test`.
 
+## Workspace layout
+
+Each topic is a self-contained directory at the workspace root:
+
+```
+<topic-slug>/
+  MISSION.md            # why this topic matters to the user
+  GLOSSARY.md           # canonical terms
+  RESOURCES.md          # vetted sources
+  literature/           # research reviews
+  lessons/NNNN-slug.md  # the lessons (numbering local to the topic)
+TOPICS.md               # registry of topic dirs (workspace root)
+review/                 # /test output (workspace root)
+learning-records/       # demonstrated understanding (workspace root)
+```
+
+Create only these paths. No extra top-level directories, no per-workspace root MISSION/GLOSSARY/RESOURCES — those live inside the topic dir.
+
 ## Run in one call
 
 `/learn "topic"` does both phases in a single invocation:
 
-1. **Phase 1 — Research.** Synthesize validated sources into a teaching review (`literature/...`).
+1. **Phase 1 — Research.** Synthesize validated sources into a teaching review (`<topic-slug>/literature/...`).
 2. **Phase 2 — Build lessons.** Build the lessons from the research — its tensions, misunderstandings, and consensus — in a sensible build order.
 
 Then point the user to `/quiz` (quick self-check) and `/test` (spaced review).
@@ -32,7 +50,7 @@ Turn the topic into a teaching review from validated, high-trust sources. The ou
 - Sequence findings so each builds on the last.
 - End with things the learner must *do*.
 
-Write to `literature/<topic>-review.md`:
+Write to `<topic-slug>/literature/<subtopic>-review.md`:
 ```markdown
 # Research: [topic]
 ## TL;DR — the mental model + the top trap, readable standalone.
@@ -50,14 +68,21 @@ Write to `literature/<topic>-review.md`:
 
 Build the lessons directly from the research — its tensions, misunderstandings, and consensus — not from diagnosing the user.
 
-1. **Ingest the backlog.** If `review/weak-items.md` exists, read it first. Those weak items are the highest-priority topics for new lessons — they are exactly where the last `/test` showed retention failed. Cover them before expanding into new ground.
-2. **Mission.** If `MISSION.md` is empty/vague, interview for the concrete reason (not "learn X" — "ship a Rust CLI"). Revise as the user grows.
-3. **Resources.** Populate `RESOURCES.md` from the review. High-trust only; annotate; surface gaps.
+1. **Ingest the backlog.** If `review/weak-items.md` exists, read it first. Those weak items are the highest-priority topics for new lessons — they are exactly where the last `/test` showed retention failed. Cover them before expanding into new ground. A weak item's lesson goes into the topic dir it links back to.
+2. **Mission.** If `<topic-slug>/MISSION.md` is missing or vague, interview for the concrete reason (not "learn X" — "ship a Rust CLI"). Revise as the user grows.
+3. **Resources.** Populate `<topic-slug>/RESOURCES.md` from the review. High-trust only; annotate; surface gaps.
 4. **Order.** Build lessons in a sensible progression: foundational concepts first, then the contested points (tensions) and the common misunderstandings the review surfaced. One lesson per load-bearing idea.
-5. **One lesson.** `lessons/NNNN-<slug>.md` — a Markdown note, self-contained, one tangible win, tied to Mission, primary-source citation. Obsidian renders it natively. Follow the structure in **LESSON-FORMAT.md** (mental model, how-it-works, at least one worked example, pitfalls, why-it-matters, connections, summary, retrieval practice). Lessons must be *deep*, not stubs: a reader should be able to teach the idea back from this file alone. Apply the same teaching craft as Phase 1. End with a **retrieval-practice question** (feeds `/quiz` and `/test`). The lesson text must contain all information required to answer this question.
-6. **Glossary + Records.** Update `GLOSSARY.md` and `learning-records/NNNN-<slug>.md` as understanding is demonstrated. A term enters the glossary only once it's clearly defined in the lessons.
-7. **Record the topic.** Append the topic (and its lesson range) to `TOPICS.md` at the workspace root so `/quiz` and `/test` can disambiguate which lessons a topic covers. Format: `- {topic}: lessons/NNNN-…–NNNN-…`.
-8. **Validate.** Run `learnmax-validate` (or `node <this-package>/scripts/validate-artifacts.mjs`) from the workspace root. Fix any reported errors before finishing — this is the automated guard against format drift.
+5. **One lesson.** `<topic-slug>/lessons/NNNN-<slug>.md` — a Markdown note, self-contained, one tangible win, tied to the topic's Mission, primary-source citation. Numbering is local to the topic (`0001`, `0002`, …). Obsidian renders it natively. Follow the structure in **LESSON-FORMAT.md** (mental model, how-it-works, at least one worked example, pitfalls, why-it-matters, connections, summary, retrieval practice). Lessons must be *deep*, not stubs: a reader should be able to teach the idea back from this file alone. Apply the same teaching craft as Phase 1. End with a **retrieval-practice question** (feeds `/quiz` and `/test`). The lesson text must contain all information required to answer this question.
+6. **Glossary + Records.** Update `<topic-slug>/GLOSSARY.md` and `learning-records/NNNN-<slug>.md` as understanding is demonstrated. A term enters the glossary once it's clearly defined in a lesson, linked back to that lesson.
+7. **Record the topic.** Register the topic dir in `TOPICS.md` at the workspace root so `/quiz` and `/test` can find topics. One line per topic: `- {topic}: <topic-slug>/`. Skip if the line already exists.
+8. **Git-ignore session state.** If the workspace is a git repo, make sure `.gitignore` at the workspace root ignores the ephemeral state. Lessons, literature, and glossaries are keepable artifacts — ignore only:
+
+   ```gitignore
+   review/
+   learning-records/
+   ```
+
+9. **Validate.** Run `learnmax-validate` (or `node <this-package>/scripts/validate-artifacts.mjs`) from the workspace root. Fix any reported errors before finishing — this is the automated guard against format drift. Do not finish with a failing validator run.
 
 Format specs live beside this skill: MISSION-FORMAT.md, RESOURCES-FORMAT.md, GLOSSARY-FORMAT.md, LEARNING-RECORD-FORMAT.md, LESSON-FORMAT.md.
 

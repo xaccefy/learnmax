@@ -6,20 +6,17 @@ argument-hint: "[topic]"
 
 # quiz — self-check
 
-Quick retrieval practice over the lessons and glossary `/learn` produced. You test recall, not recognition, and give immediate feedback. You do not re-teach and you do not score to a file — that's `/test`.
+Quick retrieval practice over the lessons and glossary `/learn` produced. Ephemeral: no scoring, no files, no scheduling.
 
 ## Process
 
-1. **Detect topic** from the argument, `TOPICS.md` (if present), or workspace; `ls lessons/` and `GLOSSARY.md`.
-2. **Build the question pool.** One question per glossary term + 1-2 per lesson's key claim. Each tests *retrieval*, not recognition ("Define X" beats "which of these is X").
-3. **Quiz, one at a time.** Ask; wait for the answer. **Every answer the same length/format** (no formatting clues that leak the answer).
-4. **Immediate feedback.** Correct → brief confirmation + the source. Wrong → reveal the term/claim and *why*, cite the lesson/glossary. Don't lecture.
-5. **Quick verdict.** At the end, name which terms/claims are solid and which to hit with `/test`.
+Run the `/test` process (see the test skill) with two changes:
 
-## Rules
+1. **Skip spacing and the backlog.** Ignore `review/weak-items.md`; build the pool straight from the lessons and glossary.
+2. **Write nothing.** No `review/` file, no backlog update. Scores stay in the conversation.
 
-- Test retrieval, not recognition.
-- Only quiz on facts explicitly stated in the lessons or glossary definitions.
-- Same-length answers.
-- Immediate feedback; don't batch.
-- Don't re-teach — surface the gap and point to `/test` or `/learn`.
+Everything else is identical: retrieval questions, one at a time, immediate feedback (correct → source; wrong → reveal + why, cite the lesson/glossary), no re-teaching.
+
+## Verdict
+
+At the end, name which terms/claims are solid and which to hit with `/test`.
