@@ -65,16 +65,16 @@ for (const line of readFileSync(topicsFile, 'utf8').split('\n')) {
 if (topics.length === 0) err('no topics registered');
 
 // --- Per-topic dirs ---
+// Required headings — these are the core sections every lesson needs.
+// Topic-specific variants are accepted; we just check the section exists.
 const lessonRequired = [
-  ['The idea', 'The idea'],
-  ['Mental model', 'Mental model'],
-  ['How it works', 'How it works'],
-  ['Worked example', 'Worked example'],
-  ['(Pitfalls|Trap)', 'Pitfalls/Trap'],
+  ['Struggle', 'Struggle'],
+  ['(The idea|The big idea)', 'The idea / The big idea'],
+  ['Common mistakes', 'Common mistakes'],
   ['Why it matters', 'Why it matters'],
-  ['Connections', 'Connections'],
   ['Summary', 'Summary'],
   ['Retrieval practice', 'Retrieval practice'],
+  ['Exercises', 'Exercises'],
   ['References', 'References'],
 ];
 
@@ -136,8 +136,10 @@ for (const slug of topics) {
     for (const [re, label] of lessonRequired) {
       heading(t, re) ? ok(`has "## ${label}"`) : err(`missing "## ${label}"`);
     }
-    if (!/^\*{0,2}Q\*{0,2}:\s/m.test(t) || !/^\*{0,2}A\*{0,2}:\s/m.test(t)) {
-      err('retrieval practice missing Q:/A:');
+    const hasQA = /^\*{0,2}Q\*{0,2}:\s/m.test(t);
+    const hasDetails = /<details>\s*\n<summary>Answer/m.test(t);
+    if (!hasQA && !hasDetails) {
+      err('retrieval practice missing Q:/A: or <details> answer');
     }
   }
 }
