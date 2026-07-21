@@ -27,35 +27,37 @@ make_lesson() { # path number
 # $2 - Example
 **Mission tie-in:** demo.
 
-## The idea
-It is a thing.
-
-## Mental model
-Like a box.
-
-## How it works
-Internals here.
-
-## Worked example
+## Struggle
+Predict what this code does:
 \`\`\`c
 int x = 1;
 \`\`\`
 
-## Pitfalls
-- Trap one.
+## The idea
+It is a thing.
+
+## Common mistakes
+- Mistake one.
 
 ## Why it matters
 Because.
-
-## Connections
-- Sets up [[demo/lessons/0002-other.md]].
 
 ## Summary
 Short restate.
 
 ## Retrieval practice
+
 Q: What is it?
-A: A thing.
+
+<details>
+<summary>Answer (write yours first)</summary>
+
+A thing.
+
+</details>
+
+## Exercises
+Open exercises/0001-example.md.
 
 ## References
 - Source.
