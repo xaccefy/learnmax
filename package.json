@@ -1,6 +1,6 @@
 {
   "name": "@xaccefy/learnmax",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "pi-user",
   "description": "Combined curriculum building and spaced review teaching system for coding agents to teach human users. Fuses research, lesson production, and a retention-verification review loop.",
   "license": "MIT",
